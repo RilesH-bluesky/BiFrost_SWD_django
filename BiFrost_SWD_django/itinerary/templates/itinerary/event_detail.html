@@ -1,54 +1,63 @@
 {% extends 'itinerary/base.html' %}
 
 {% block content %}
-<div class="row">
-    <div class="col-lg-8 mx-auto">
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="{% url 'edit' event.itinerary.id %}" class="btn btn-outline-secondary btn-sm">
+                <i class="fa-solid fa-arrow-left me-2"></i>Back to Itinerary
+            </a>
+            <span class="badge bg-dark px-3 py-2 text-uppercase">{{ event.category }}</span>
+        </div>
+
         <div class="card border-0 shadow-sm">
-            <div class="card-header bg-dark text-white p-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">{{ event.name }}</h3>
-                    <span class="badge bg-light text-dark">{{ event.category|upper }}</span>
-                </div>
+            <div class="card-header bg-primary text-white p-4">
+                <h4 class="mb-0"><i class="fa-solid fa-pen-to-square me-2"></i>Edit Event Details</h4>
             </div>
             
-            <div class="card-body p-4">
-                <div class="row mb-4">
-                    <div class="col-sm-6">
-                        <p class="text-muted small mb-1 text-uppercase fw-bold">Date & Time</p>
-                        <p class="fs-5"><i class="fa-regular fa-calendar me-2"></i>{{ event.start_datetime|date:"M d, Y - H:i" }}</p>
-                    </div>
-                    <div class="col-sm-6">
-                        <p class="text-muted small mb-1 text-uppercase fw-bold">Cost</p>
-                        <p class="fs-5"><i class="fa-solid fa-money-bill-wave me-2 text-success"></i>${{ event.cost|default:"0.00" }}</p>
-                    </div>
-                </div>
-
-                <div class="bg-light p-4 rounded mb-4 border">
-                    <h5 class="fw-bold mb-3 border-bottom pb-2">Event Details</h5>
-                    <p>{{ event.description|default:"No description provided." }}</p>
+            <form action="{% url 'event_detail' event.id %}" method="POST">
+                {% csrf_token %}
+                <div class="card-body p-4 p-md-5">
                     
-                    {% if event.foodevent %}
-                        <p><strong><i class="fa-solid fa-utensils me-2"></i>Menu Notes:</strong> {{ event.foodevent.menu }}</p>
-                    {% elif event.transportationevent %}
-                        <p><strong><i class="fa-solid fa-ticket me-2"></i>Transport Type:</strong> {{ event.transportationevent.get_type_display }}</p>
-                    {% endif %}
-                </div>
-
-                {% if event.place %}
-                <div class="alert alert-secondary border-0 d-flex justify-content-between align-items-center">
-                    <div>
-                        <i class="fa-solid fa-location-dot me-2 text-danger"></i>
-                        <strong>Linked Location:</strong> {{ event.place.name }}
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-muted small text-uppercase">Event Name</label>
+                        <input type="text" class="form-control form-control-lg fw-bold" name="name" value="{{ event.name }}" required>
                     </div>
-                    <a href="#" class="btn btn-sm btn-outline-dark">View Map</a>
-                </div>
-                {% endif %}
 
-            </div>
-            <div class="card-footer bg-white p-3 text-end">
-                <a href="/itinerary/edit/{{ event.itinerary.id }}/" class="btn btn-link text-muted text-decoration-none">Back to Itinerary</a>
-            </div>
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-muted small text-uppercase">Location</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fa-solid fa-location-dot text-danger"></i></span>
+                                <input type="text" class="form-control" name="location" value="{{ event.location|default:'' }}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold text-muted small text-uppercase">Estimated Cost</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-success fw-bold">$</span>
+                                <input type="number" step="0.01" class="form-control" name="cost" value="{{ event.cost|default:'0.00' }}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="alert alert-secondary border-0 d-flex align-items-center mt-4">
+                        <i class="fa-solid fa-circle-info fs-4 me-3 text-primary"></i>
+                        <div>
+                            <strong>Note:</strong> Advanced specialized details (like menus or flight types) are managed via the core Admin Panel. 
+                        </div>
+                    </div> -->
+
+                </div>
+                <div class="card-footer bg-light p-4 text-end">
+                    <button type="submit" class="btn btn-success px-4">
+                        <i class="fa-solid fa-floppy-disk me-2"></i>Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
+        
     </div>
 </div>
 {% endblock %}

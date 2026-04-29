@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from environ import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +24,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-4q^yo4817cbvqc+-+9!d4q&nq&hlr(l6fklb674hd(-!$fn7*d'
+SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default=False)
 
+<<<<<<< HEAD:BiFrost/settings.py
 ALLOWED_HOSTS = ['*']
+=======
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
+>>>>>>> origin/master:BiFrost_SWD_django/BiFrost/settings.py
 
 
 # Application definition
@@ -72,12 +80,33 @@ WSGI_APPLICATION = 'BiFrost.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if env("DATABASE") == "postgres":
+    DATABASES = {
+        "default": {
+            "ENGINE": env("SQL_ENGINE"),
+            "NAME": env("SQL_DATABASE"),
+            "USER": env("SQL_USER"),
+            "PASSWORD": env("SQL_PASSWORD"),
+            "HOST": env("SQL_HOST"),
+            "PORT": env("SQL_PORT"),
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": f"redis://{env('REDIS_HOST')}:{env('REDIS_PORT')}/1",
     }
 }
+
 
 
 # Password validation

@@ -8,14 +8,35 @@
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
 services:
-  server:
-    build:
-      context: .
+  web:
+    build: ./BiFrost_SWD_django
+    command: uv run manage.py runserver 0.0.0.0:8000
+    volumes:
+      []
     ports:
       - 8000:8000
-    # Use a volume bind mount
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - cache
+
+  db:
+    image: postgres:16.5
+    environment:
+      - POSTGRES_USER=dev_user
+      - POSTGRES_PASSWORD=dev_password
+      - POSTGRES_DB=dev_db
     volumes:
-      - .:/app
+      - postgres_data:/var/lib/postgresql/data/
+  cache:
+      image: redis:7.2.4
+      restart: always
+      ports:
+        - "6379:6379"
+
+volumes:
+  postgres_data:
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

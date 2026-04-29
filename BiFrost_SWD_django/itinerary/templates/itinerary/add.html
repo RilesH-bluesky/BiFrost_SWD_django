@@ -1,0 +1,66 @@
+{% extends 'itinerary/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+        <div class="card border-0 shadow-lg">
+            <div class="card-header bg-dark text-white p-4 text-center">
+                <i class="fa-solid fa-plane-departure fa-2x mb-2 text-info"></i>
+                <h3 class="fw-bold mb-0">Create your Itinerary</h3>
+                <p class="text-info small mb-0 font-monospace">Distributed Core System v1.0</p>
+            </div>
+            <div class="card-body p-4 p-lg-5">
+                <form method="POST" action="/itinerary/add/" class="needs-validation">
+                    {% csrf_token %}
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary">Itinerary Title</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fa-solid fa-tag text-muted"></i></span>
+                            <input type="text" class="form-control form-control-lg" name="name" 
+                                   placeholder="e.g., Summer in Scandinavia" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary">Primary Destination</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fa-solid fa-location-dot text-muted"></i></span>
+                            <input type="text" class="form-control form-control-lg" name="destination" 
+                                   placeholder="e.g., Oslo, Norway" required>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label class="form-label fw-semibold text-secondary">Start Date</label>
+                            <input type="date" class="form-control" name="start_date" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-secondary">End Date</label>
+                            <input type="date" class="form-control" name="end_date" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold text-secondary">Traveler Count</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fa-solid fa-users text-muted"></i></span>
+                            <input type="number" class="form-control" name="participants" value="1" min="1">
+                        </div>
+                    </div>
+
+                    <div class="d-grid mt-5">
+                        <button type="submit" class="btn btn-primary btn-lg shadow">
+                            <i class="fa-solid fa-rocket me-2"></i>Launch Itinerary
+                        </button>
+                        <a href="/itinerary/" class="btn btn-link btn-sm text-decoration-none mt-3 text-muted">
+                            Cancel and return to Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

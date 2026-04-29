@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from itinerary.models import Itinerary
 from .models import Budget
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def dashboard(request, trip_id):
     """
     Financial Workflow: Calculates and displays budget vs actual costs.

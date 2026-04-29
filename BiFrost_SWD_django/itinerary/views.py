@@ -1,14 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Itinerary, Event, TransportationEvent, FoodEvent, EntertainmentEvent
+from django.contrib.auth.decorators import login_required
 
-
+@login_required
 def index(request):
     """Acts as the main dashboard."""
     trips = Itinerary.objects.all()
     return render(request, "itinerary/index.html", {"trips": trips})
 
-
+@login_required
 def add(request):
     """Handles the 'Itinerary Creation' scenario."""
     if request.method == "POST":
@@ -23,7 +24,7 @@ def add(request):
         return redirect("index")
     return render(request, "itinerary/add.html")
 
-
+@login_required
 def edit(request, trip_id):
     """The 'Management' view for a specific trip."""
     trip = get_object_or_404(Itinerary, id=trip_id)
@@ -31,7 +32,7 @@ def edit(request, trip_id):
 
     return render(request, "itinerary/edit.html", {"trip": trip, "events": events})
 
-
+@login_required
 def add_event(request, trip_id):
     """Workflow to attach specialized events to an itinerary."""
     trip = get_object_or_404(Itinerary, id=trip_id)
@@ -69,7 +70,7 @@ def add_event(request, trip_id):
 
     return render(request, "itinerary/add_event.html", {"trip": trip})
 
-
+@login_required
 def event_detail(request, event_id):
     """Drill-down workflow for specific event data."""
     event = get_object_or_404(Event, id=event_id)

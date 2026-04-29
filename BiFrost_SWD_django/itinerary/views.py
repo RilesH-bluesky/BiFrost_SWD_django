@@ -1,11 +1,10 @@
 from django.shortcuts import render, HttpResponse
 
-# Create your views here.
 def index(request):
-    return HttpResponse(request, "This is the Itinerary Home Page")
+    return HttpResponse("Itinerary index")
 
-def add(request):
-    return HttpResponse(request, "This is where you create an Itinerary")
+def create_itinerary(request):
+    return HttpResponse("Create itinerary")
 
-def edit(request):
-    return HttpResponse(request, "This is where you edit an Itinerary")
+def edit_itinerary(request, pk):
+    return HttpResponse(f"Edit itinerary {pk}")

@@ -12,7 +12,9 @@ services:
     build: ./BiFrost_SWD_django
     command: uv run manage.py runserver 0.0.0.0:8000
     volumes:
-      []
+      - ./BiFrost_SWD_django/BiFrost:/app/BiFrost
+      - ./BiFrost_SWD_django/itinerary:/app/itinerary
+      - ./BiFrost_SWD_django/manage.py:/app/manage.py
     ports:
       - 8000:8000
     env_file:

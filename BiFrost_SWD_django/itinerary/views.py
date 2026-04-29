@@ -3,7 +3,6 @@ from .models import Itinerary, Event, TransportationEvent, FoodEvent, Entertainm
 
 
 def index(request):
-<<<<<<< HEAD
     """
     Acts as the main dashboard.
     Queries the Data Tier for all existing itineraries.
@@ -89,12 +88,3 @@ def add_event(request, trip_id):
         return redirect("edit", trip_id=trip.id)
 
     return render(request, "itinerary/add_event.html", {"trip": trip})
-=======
-    return HttpResponse("Itinerary index")
-
-def create_itinerary(request):
-    return HttpResponse("Create itinerary")
-
-def edit_itinerary(request, pk):
-    return HttpResponse(f"Edit itinerary {pk}")
->>>>>>> a39b742ef2581b72a0cd62fcb37dcb1a444d17af

@@ -1,0 +1,32 @@
+{% extends 'itinerary/base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <h2>Your Travel Itineraries</h2>
+        <p class="text-muted">Manage all your upcoming trips in one place.</p>
+    </div>
+</div>
+
+<div class="row">
+    {% for trip in trips %}
+    <div class="col-md-4 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ trip.name }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ trip.trip_destination }}</h6>
+                <p class="card-text">
+                    <strong>Start:</strong> {{ trip.start_date }}<br>
+                    <strong>End:</strong> {{ trip.end_date }}
+                </p>
+                <a href="/itinerary/edit/{{ trip.id }}/" class="btn btn-primary btn-sm">Manage Trip & Events</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col">
+        <div class="alert alert-info">You haven't created any itineraries yet. Click "+ New Itinerary" to start!</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

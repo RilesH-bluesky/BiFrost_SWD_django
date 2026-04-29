@@ -6,4 +6,6 @@ urlpatterns = [
     path("add/", views.add, name="add"),
     path("edit/<int:trip_id>/", views.edit, name="edit"),
     path("edit/<int:trip_id>/add-event/", views.add_event, name="add_event"),
+    # Flat routing for specific items
+    path("event/<int:event_id>/", views.event_detail, name="event_detail"),
 ]

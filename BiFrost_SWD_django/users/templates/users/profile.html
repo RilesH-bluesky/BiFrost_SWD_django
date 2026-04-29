@@ -1,0 +1,120 @@
+{% extends 'itinerary/base.html' %}
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+
+    {# ---- Left column: User card ---- #}
+    <div class="col-md-4">
+        <div class="card shadow text-center">
+            <div class="card-body p-4">
+                {% if profile.avatar_url %}
+                <img src="{{ profile.avatar_url }}" alt="Avatar"
+                     class="rounded-circle mb-3" width="80" height="80" style="object-fit:cover;">
+                {% else %}
+                <div class="avatar-circle mx-auto mb-3">
+                    {{ user.username|slice:":1"|upper }}
+                </div>
+                {% endif %}
+
+                <h5 class="mb-0 fw-bold">
+                    {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
+                </h5>
+                <p class="text-muted small mb-1">@{{ user.username }}</p>
+                <p class="text-muted small mb-3">{{ user.email }}</p>
+
+                {% if profile.home_city %}
+                <p class="mb-1"><i class="fa-solid fa-location-dot me-1 text-danger"></i>{{ profile.home_city }}</p>
+                {% endif %}
+
+                {% if profile.preferred_currency %}
+                <p class="mb-3"><i class="fa-solid fa-coins me-1 text-warning"></i>{{ profile.preferred_currency }}</p>
+                {% endif %}
+
+                {% if profile.bio %}
+                <p class="text-muted small fst-italic">{{ profile.bio }}</p>
+                {% endif %}
+
+                <hr>
+                <a href="/users/profile/edit/" class="btn btn-primary btn-sm w-100 mb-2">
+                    <i class="fa-solid fa-pen me-1"></i> Edit Profile
+                </a>
+                <a href="/users/profile/password/" class="btn btn-outline-secondary btn-sm w-100">
+                    <i class="fa-solid fa-key me-1"></i> Change Password
+                </a>
+            </div>
+            <div class="card-footer bg-light text-muted small py-2">
+                Member since {{ user.date_joined|date:"M Y" }}
+            </div>
+        </div>
+    </div>
+
+    {# ---- Right column: Recent trips ---- #}
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header card-header-accent py-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fa-solid fa-map me-2"></i>Recent Itineraries</h5>
+                <a href="/itinerary/add/" class="btn btn-outline-light btn-sm">
+                    <i class="fa-solid fa-plus me-1"></i> New Trip
+                </a>
+            </div>
+            <div class="card-body p-0">
+                {% if trips %}
+                <ul class="list-group list-group-flush">
+                    {% for trip in trips %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3 px-4">
+                        <div>
+                            <span class="fw-semibold">{{ trip.name }}</span>
+                            <br>
+                            <small class="text-muted">
+                                <i class="fa-solid fa-location-dot me-1"></i>{{ trip.trip_destination }} &nbsp;|&nbsp;
+                                <i class="fa-solid fa-calendar me-1"></i>{{ trip.start_date }} → {{ trip.end_date }}
+                            </small>
+                        </div>
+                        <a href="/itinerary/edit/{{ trip.id }}/" class="btn btn-outline-primary btn-sm">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <div class="p-4 text-center text-muted">
+                    <i class="fa-solid fa-suitcase-rolling fa-2x mb-2 opacity-50"></i>
+                    <p class="mb-0">No itineraries yet. <a href="/itinerary/add/">Create your first trip!</a></p>
+                </div>
+                {% endif %}
+            </div>
+            {% if trips %}
+            <div class="card-footer bg-light text-center">
+                <a href="/itinerary/" class="text-decoration-none small">View all itineraries →</a>
+            </div>
+            {% endif %}
+        </div>
+
+        {# ---- Stats row ---- #}
+        <div class="row g-3 mt-1">
+            <div class="col-sm-4">
+                <div class="card shadow-sm text-center py-3">
+                    <div class="fs-2 fw-bold text-primary">{{ user.itineraries.count }}</div>
+                    <div class="text-muted small">Total Trips</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card shadow-sm text-center py-3">
+                    <div class="fs-2 fw-bold" style="color:#e94560;">{{ profile.preferred_currency|default:"USD" }}</div>
+                    <div class="text-muted small">Currency</div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card shadow-sm text-center py-3">
+                    <div class="fs-2 fw-bold text-success">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div class="text-muted small">Active Account</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -14,12 +14,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path, include
+from django.shortcuts import redirect
+
+def root_redirect(request):
+    if request.user.is_authenticated:
+        return redirect("/itinerary/")
+    return redirect("/users/login/")
 
 urlpatterns = [
+    path("", root_redirect, name="root"),
+
+    path("users/", include("users.urls")),
     path("itinerary/", include("itinerary.urls")),
-    path("itinerary/", include("finance.urls")),
-    path("place/", include("utility.urls")),
-    path("admin/", admin.site.urls)
+    path("finance/", include("finance.urls")),
+    path("utility/", include("utility.urls")),
+
+    path("admin/", admin.site.urls),
 ]

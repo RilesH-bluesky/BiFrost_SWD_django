@@ -1,0 +1,20 @@
+{% extends 'itinerary/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Alerts for {{ trip.name }}</h2>
+
+    {% if alerts %}
+        <ul class="list-group mt-3">
+            {% for alert in alerts %}
+                <li class="list-group-item">
+                    <strong>{{ alert.title }}</strong><br>
+                    {{ alert.message }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted mt-3">No alerts for this trip.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'itinerary/base.html' %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7">
+
+        <div class="d-flex align-items-center mb-4 gap-3">
+            <a href="/users/profile/" class="btn btn-outline-secondary btn-sm">
+                <i class="fa-solid fa-arrow-left me-1"></i> Back
+            </a>
+            <h3 class="mb-0">Edit Profile</h3>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+
+            {# ---- Account Info ---- #}
+            <div class="card shadow mb-4">
+                <div class="card-header card-header-accent py-3">
+                    <h5 class="mb-0"><i class="fa-solid fa-id-card me-2"></i>Account Info</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="{{ user_form.first_name.id_for_label }}" class="form-label fw-semibold">First Name</label>
+                            {{ user_form.first_name }}
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="{{ user_form.last_name.id_for_label }}" class="form-label fw-semibold">Last Name</label>
+                            {{ user_form.last_name }}
+                        </div>
+                        <div class="col-12">
+                            <label for="{{ user_form.email.id_for_label }}" class="form-label fw-semibold">Email</label>
+                            {{ user_form.email }}
+                            {% for error in user_form.email.errors %}
+                            <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# ---- Travel Preferences ---- #}
+            <div class="card shadow mb-4">
+                <div class="card-header card-header-accent py-3">
+                    <h5 class="mb-0"><i class="fa-solid fa-plane me-2"></i>Travel Preferences</h5>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="{{ profile_form.home_city.id_for_label }}" class="form-label fw-semibold">Home City</label>
+                            {{ profile_form.home_city }}
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="{{ profile_form.preferred_currency.id_for_label }}" class="form-label fw-semibold">Preferred Currency</label>
+                            {{ profile_form.preferred_currency }}
+                        </div>
+                        <div class="col-12">
+                            <label for="{{ profile_form.avatar_url.id_for_label }}" class="form-label fw-semibold">Avatar URL</label>
+                            {{ profile_form.avatar_url }}
+                            <div class="form-text">Paste a link to an image (e.g., from Gravatar)</div>
+                        </div>
+                        <div class="col-12">
+                            <label for="{{ profile_form.bio.id_for_label }}" class="form-label fw-semibold">Bio</label>
+                            {{ profile_form.bio }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="fa-solid fa-floppy-disk me-2"></i>Save Changes
+                </button>
+                <a href="/users/profile/" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

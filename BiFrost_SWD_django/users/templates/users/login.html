@@ -1,0 +1,55 @@
+{% extends 'itinerary/base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header card-header-accent py-3">
+                <h4 class="mb-0"><i class="fa-solid fa-bridge-water me-2"></i>Sign in to BiFrost</h4>
+                <small class="opacity-75">Your travel command centre awaits</small>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label fw-semibold">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fa-solid fa-user text-muted"></i></span>
+                            <input type="text" name="username" id="id_username"
+                                   class="form-control{% if form.username.errors %} is-invalid{% endif %}"
+                                   placeholder="Enter your username" autofocus required>
+                        </div>
+                        {% for error in form.username.errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="id_password" class="form-label fw-semibold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="fa-solid fa-lock text-muted"></i></span>
+                            <input type="password" name="password" id="id_password"
+                                   class="form-control{% if form.non_field_errors %} is-invalid{% endif %}"
+                                   placeholder="Enter your password" required>
+                        </div>
+                        {% for error in form.non_field_errors %}
+                        <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary py-2">
+                            <i class="fa-solid fa-right-to-bracket me-2"></i>Log In
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer bg-light text-center py-3">
+                <span class="text-muted">New to BiFrost?</span>
+                <a href="/users/register/" class="fw-semibold ms-1">Create an account</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

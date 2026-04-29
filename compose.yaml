@@ -15,6 +15,9 @@ services:
       - ./BiFrost_SWD_django/BiFrost:/app/BiFrost
       - ./BiFrost_SWD_django/itinerary:/app/itinerary
       - ./BiFrost_SWD_django/manage.py:/app/manage.py
+      - ./BiFrost_SWD_django/utility:/app/utility
+      - ./BiFrost_SWD_django/users:/app/users
+      - ./BiFrost_SWD_django/finance:/app/finance
     ports:
       - 8000:8000
     env_file:

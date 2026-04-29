@@ -1,0 +1,37 @@
+{% extends 'itinerary/base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="fw-bold"><i class="fa-solid fa-wallet text-success me-2"></i>Financial Overview</h2>
+        <p class="text-muted">Tracking expenses for: <strong>{{ itinerary.name }}</strong></p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card border-0 shadow-sm border-start border-success border-4 h-100">
+            <div class="card-body">
+                <p class="text-muted text-uppercase small fw-bold mb-1">Total Budget</p>
+                <h3 class="fw-bold mb-0">${{ budget.max_budget|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mt-3 mt-md-0">
+        <div class="card border-0 shadow-sm border-start border-danger border-4 h-100">
+            <div class="card-body">
+                <p class="text-muted text-uppercase small fw-bold mb-1">Current Costs</p>
+                <h3 class="fw-bold mb-0">${{ budget.current_cost|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mt-3 mt-md-0">
+        <div class="card border-0 shadow-sm border-start border-info border-4 h-100">
+            <div class="card-body">
+                <p class="text-muted text-uppercase small fw-bold mb-1">Remaining</p>
+                <h3 class="fw-bold mb-0">${{ remaining_budget|floatformat:2 }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

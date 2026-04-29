@@ -1,0 +1,39 @@
+{% extends 'itinerary/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold mb-0"><i class="fa-solid fa-bell text-warning me-2"></i>System Alerts</h3>
+            <button class="btn btn-outline-secondary btn-sm">Mark All as Read</button>
+        </div>
+
+        <div class="list-group shadow-sm">
+            {% for alert in alerts %}
+                <div class="list-group-item list-group-item-action p-4 {% if not alert.is_read %}bg-light border-start border-warning border-4{% endif %}">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1 fw-bold">
+                            {% if alert.type == 'warning' %}
+                                <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
+                            {% elif alert.type == 'reminder' %}
+                                <i class="fa-solid fa-clock text-info me-2"></i>
+                            {% else %}
+                                <i class="fa-solid fa-circle-info text-primary me-2"></i>
+                            {% endif %}
+                            {{ alert.type|title }}
+                        </h5>
+                        <small class="text-muted">{{ alert.timestamp|timesince }} ago</small>
+                    </div>
+                    <p class="mb-1 mt-2 text-secondary">{{ alert.message }}</p>
+                    <small class="text-muted">Ref: {{ alert.itinerary.name }}</small>
+                </div>
+            {% empty %}
+                <div class="text-center p-5 text-muted bg-white border rounded">
+                    <i class="fa-regular fa-bell-slash fa-3x mb-3"></i>
+                    <p>No active alerts at this time.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

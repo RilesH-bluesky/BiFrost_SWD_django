@@ -84,7 +84,7 @@
                             </td>
                             <td>
                                 <div class="fw-bold">{{ event.name }}</div>
-                                <small class="text-muted">{{ event.date|date:"H:i" }}</small>
+                                <small class="text-muted">{{ event.start_datetime|date:"H:i" }}</small>
                             </td>
                             <td>{{ event.location }}</td>
                             <td><span class="fw-bold text-dark">${{ event.cost }}</span></td>

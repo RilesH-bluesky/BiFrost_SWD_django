@@ -36,6 +36,7 @@ class Itinerary(models.Model):
 
     def __str__(self):
         return f"{self.name} Trip to {self.trip_destination}"
+    
 
 
 # ==========================================

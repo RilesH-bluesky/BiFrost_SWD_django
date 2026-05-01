@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: DejaVu Sans, sans-serif; }
+        h1 { text-align: center; }
+        .event { margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<h1>{{ trip.name }}</h1>
+
+<p><strong>Destination:</strong> {{ trip.trip_destination }}</p>
+<p><strong>Dates:</strong> {{ trip.start_date }} → {{ trip.end_date }}</p>
+<p><strong>Participants:</strong> {{ trip.number_of_participants }}</p>
+
+<h2>Events</h2>
+{% for event in trip.events.all %}
+    <div class="event">
+        <strong>{{ event.name }}</strong><br>
+        Category: {{ event.category }}<br>
+        Location: {{ event.location }}<br>
+        Cost: ${{ event.cost }}
+    </div>
+{% empty %}
+    <p>No events added yet.</p>
+{% endfor %}
+
+</body>
+</html>

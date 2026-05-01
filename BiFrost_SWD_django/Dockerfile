@@ -5,6 +5,12 @@ FROM python:3.14-slim-bookworm
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
+    libcairo2 \
+    libcairo2-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    pkg-config \
+    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 ENV PYTHONDONTWRITEBYTECODE=1 \

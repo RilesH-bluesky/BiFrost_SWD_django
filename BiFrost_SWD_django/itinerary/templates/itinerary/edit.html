@@ -34,7 +34,10 @@
                                 <a href="{% url 'finance_dashboard' trip.id %}" class="btn btn-success btn-sm shadow-sm">
                                     <i class="fa-solid fa-wallet me-1"></i> View Budget
                                 </a>
-                                
+                                <a href="{% url 'export_pdf' trip.id %}" class="btn btn-primary">
+                                    <i class="fa-solid fa-file-pdf"></i> Export as PDF
+                                </a>
+
                                 <form action="{% url 'delete_trip' trip.id %}" method="POST" onsubmit="return confirm('WARNING: Are you sure you want to completely cancel this trip?');">
                                     {% csrf_token %}
                                     <button type="submit" class="btn btn-outline-danger btn-sm shadow-sm">
